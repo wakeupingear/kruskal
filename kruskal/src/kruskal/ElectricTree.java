@@ -27,6 +27,7 @@ public class ElectricTree {
     		for (int i=0;i<cityNum;i++) {
     			cityList.add(new CityNode(br.readLine()));
     		}
+    		powerPlantLocation=cityList.get(0);
     		
     		String connection;
     	    while ((connection = br.readLine()) != null) {
@@ -37,7 +38,7 @@ public class ElectricTree {
     	    	int dist=Integer.parseInt(connection.substring(pos2+1));
     	    	int len=cityDistList.size();
     	    	if (len==0) addCity(city1,city2,dist,0);
-    	    	else for (int i=1;i<len;i++) {
+    	    	else for (int i=1;i<=len;i++) {
     	    		if (i>=len-1||dist>cityDistList.get(i-1)) {
     	    			addCity(city1,city2,dist,i);
     	    			break;
@@ -45,6 +46,14 @@ public class ElectricTree {
     	    	}
     	    }
     	    br.close();
+    	    
+    	    String str="[";
+    		for (int i=0;i<cityDistList.size();i++) {
+    			if (i>0) str+=", ";
+    			str+=cityDistList.get(i);
+    		}
+    		str+="]";
+    		System.out.println(str);
     	}
     	
     	while (cityDistList.size()>0) {
