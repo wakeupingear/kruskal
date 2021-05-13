@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ElectricTree {
@@ -12,17 +13,16 @@ public class ElectricTree {
     private int totalCost;
     
     private ArrayList<CityNode> cityList;
-    public ArrayList<Integer> cityDistList;
-    public ArrayList<String> cityKeyList;
+    public ArrayList<CityDistance> cityDistList;
     public HashMap<String,String> cityConnectedMap;
 
-    public ElectricTree(String fileName) throws FileNotFoundException, IOException {
+    @SuppressWarnings("unchecked")
+	public ElectricTree(String fileName) throws FileNotFoundException, IOException {
     	totalCost=0;
     	try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
     		int cityNum=Integer.parseInt(br.readLine());
     		cityList=new ArrayList<CityNode>();
-    		cityDistList=new ArrayList<Integer>();
-    		cityKeyList=new ArrayList<String>();
+    		cityDistList=new ArrayList<CityDistance>();
     		cityConnectedMap=new HashMap<String,String>();
     		for (int i=0;i<cityNum;i++) {
     			cityList.add(new CityNode(br.readLine()));
@@ -36,44 +36,20 @@ public class ElectricTree {
     	    	String city1 = connection.substring(0,pos1);
     	    	String city2 = connection.substring(pos1,pos2);
     	    	int dist=Integer.parseInt(connection.substring(pos2+1));
-    	    	int len=cityDistList.size();
-    	    	if (len==0) addCity(city1,city2,dist,0);
-    	    	else for (int i=0;i<len;i++) {
-    	    		if (dist<cityDistList.get(i)) {
-    	    			addCity(city1,city2,dist,i);
-    	    			break;
-    	    		}
-    	    		if (i==len-1) addCity(city1,city2,dist,i+1);
-    	    	}
+    	    	cityDistList.add(new CityDistance(city1,city2,dist));
     	    }
     	    br.close();
-    	    
-    	    String str="[";
-    		for (int i=0;i<cityDistList.size();i++) {
-    			if (i>0) str+=", ";
-    			str+=cityDistList.get(i);
-    		}
-    		str+="]";
-    		System.out.println(str);
     	}
-    	
+    	Collections.sort(cityDistList);
     	while (cityDistList.size()>0) {
-    		int dist=cityDistList.remove(0);
-    		String city1=cityKeyList.remove(0);
-    		String city2=cityKeyList.remove(0);
-    		if (!cityIsConnected(city1)&&!cityIsConnected(city2)) {
-    			totalCost+=dist;
-    			cityConnectedMap.put(city2,city1);
+    		CityDistance distObj=cityDistList.remove(0);
+    		if (!cityIsConnected(distObj.city1)&&!cityIsConnected(distObj.city2)) {
+    			totalCost+=distObj.dist;
+    			cityConnectedMap.put(distObj.city2,distObj.city1);
     		}
     	}
     	
     	System.out.println(totalCost);
-    }
-    
-    public void addCity(String city1,String city2,int dist,int pos) {
-    	cityDistList.add(pos,dist);
-    	cityKeyList.add(pos*2,city1);
-    	cityKeyList.add(pos*2+1,city2);
     }
     
     public boolean cityIsConnected(String city) {
