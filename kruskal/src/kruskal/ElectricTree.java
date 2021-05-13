@@ -38,11 +38,12 @@ public class ElectricTree {
     	    	int dist=Integer.parseInt(connection.substring(pos2+1));
     	    	int len=cityDistList.size();
     	    	if (len==0) addCity(city1,city2,dist,0);
-    	    	else for (int i=1;i<=len;i++) {
-    	    		if (i>=len-1||dist>cityDistList.get(i-1)) {
+    	    	else for (int i=0;i<len;i++) {
+    	    		if (dist<cityDistList.get(i)) {
     	    			addCity(city1,city2,dist,i);
     	    			break;
     	    		}
+    	    		if (i==len-1) addCity(city1,city2,dist,i+1);
     	    	}
     	    }
     	    br.close();
@@ -62,7 +63,7 @@ public class ElectricTree {
     		String city2=cityKeyList.remove(0);
     		if (!cityIsConnected(city1)&&!cityIsConnected(city2)) {
     			totalCost+=dist;
-    			cityConnectedMap.put(city1,city2);
+    			cityConnectedMap.put(city2,city1);
     		}
     	}
     	
@@ -77,7 +78,7 @@ public class ElectricTree {
     
     public boolean cityIsConnected(String city) {
     	if (cityConnectedMap.containsKey(city)) {
-    		if (cityConnectedMap.get(city)==powerPlantLocation.getName()) return true;
+    		if (cityConnectedMap.get(city).equals(powerPlantLocation.getName())) return true;
     		return cityIsConnected(cityConnectedMap.get(city));
     	}
     	return false;

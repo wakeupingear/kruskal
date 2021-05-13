@@ -4,10 +4,10 @@ Alhambra
 StudioCity
 WestHills
 Claremont
+WestHills Alhambra 13
+Alhambra Claremont 20
+Pasadena Claremont 1
 Pasadena Alhambra 2
 Alhambra StudioCity 10
 Pasadena StudioCity 9
 StudioCity WestHills 5
-WestHills Alhambra 13
-Alhambra Claremont 20
-Pasadena Claremont 17
