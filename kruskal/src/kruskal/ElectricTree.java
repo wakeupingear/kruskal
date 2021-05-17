@@ -43,7 +43,9 @@ public class ElectricTree {
     	Collections.sort(cityDistList);
     	while (cityDistList.size()>0) {
     		CityDistance distObj=cityDistList.remove(0);
-    		if (!cityIsConnected(distObj.city1)&&!cityIsConnected(distObj.city2)) {
+    		boolean city1Connected = (cityIsConnected(distObj.city1));
+    		boolean city2Connected = (cityIsConnected(distObj.city2));
+    		if ((!city1Connected&&!city2Connected)) {
     			totalCost+=distObj.dist;
     			cityConnectedMap.put(distObj.city2,distObj.city1);
     		}
