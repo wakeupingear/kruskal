@@ -30,7 +30,6 @@ public class ElectricTree {
     			cityConnectedMap.put(name, new ArrayList<String>());
     		}
     		powerPlantLocation=cityList.get(0);
-    		System.out.println(getPowerPlant());
     		
     		String connection;
     	    while ((connection = br.readLine()) != null) {
@@ -54,7 +53,7 @@ public class ElectricTree {
     	}
     	
     	System.out.println("Total Cost: "+totalCost);
-    	//System.out.println()
+    	System.out.println(printTree(getPowerPlant(),""));
     }
     
     //Recursively checks to see if a city is connected back to the power plant
@@ -82,8 +81,16 @@ public class ElectricTree {
             return totalCost;
     }
     
-    public String printTree() {
-    	return "";
+    public String printTree(String city, String lastCity) {
+    	StringBuilder str=new StringBuilder(city+": {");
+    	ArrayList<String> list=cityConnectedMap.get(city);
+    	for (int i=0;i<list.size();i++) {
+    		if (list.get(i).equals(lastCity)) continue;
+    		if (i>0) str.append(",");
+    		str.append(printTree(list.get(i),city));
+    	}
+    	str.append("}");
+    	return str.toString();
     }
 
 }

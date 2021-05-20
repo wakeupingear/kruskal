@@ -1,9 +1,12 @@
-5
+8
 Pasadena
 Alhambra
 StudioCity
 WestHills
 Claremont
+WillFarhat
+KristaSemaan
+ZaneNeelin
 WestHills Alhambra 13
 Alhambra Claremont 20
 Pasadena Claremont 17
@@ -11,3 +14,6 @@ Pasadena Alhambra 2
 Alhambra StudioCity 10
 StudioCity Pasadena 9
 StudioCity WestHills 5
+WestHills WillFarhat 10
+StudioCity ZaneNeelin 10
+ZaneNeelin KristaSemaan 10
